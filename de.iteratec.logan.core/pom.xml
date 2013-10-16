@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.iteratec.logan</groupId>
+	<artifactId>de.iteratec.logan.core</artifactId>
+	<packaging>eclipse-plugin</packaging>
+	<version>1.0.8-SNAPSHOT</version>
+
+	<parent>
+		<artifactId>de.iteratec.logan.build</artifactId>
+		<groupId>de.iteratec.logan</groupId>
+		<version>1.0.8-SNAPSHOT</version>
+		<relativePath>../de.iteratec.logan.build/pom.xml</relativePath>
+	</parent>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>.</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>about.mappings</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+
+</project>

@@ -1,0 +1,3 @@
+instructions.configure=\
+addRepository(type:0,location:http${#58}//iteraweb.iteratec.de:8080/loganalyser,name:Loganalyser Updates);\
+addRepository(type:1,location:http${#58}//iteraweb.iteratec.de:8080/loganalyser,name:Loganalyser Updates);\

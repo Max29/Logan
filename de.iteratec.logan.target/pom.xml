@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>de.iteratec.logan.build</artifactId>
+		<groupId>de.iteratec.logan</groupId>
+		<version>1.0.8-SNAPSHOT</version>
+		<relativePath>../de.iteratec.logan.build/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>de.iteratec.logan.target</artifactId>
+	<packaging>eclipse-target-definition</packaging>
+</project>

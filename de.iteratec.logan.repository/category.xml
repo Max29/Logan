@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="de.iteratec.logan.feature" version="0.0.0">
+      <category name="loganalyser"/>
+   </feature>
+   <category-def name="loganalyser" label="Loganalyser">
+      <description>
+         Contains all Loganalyser features
+      </description>
+   </category-def>
+</site>
