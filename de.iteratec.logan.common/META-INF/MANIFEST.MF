@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Common
+Bundle-Name: Logan Commons
 Bundle-SymbolicName: de.iteratec.logan.common
 Bundle-Version: 1.0.8.qualifier
 Bundle-Activator: de.iteratec.logan.common.Activator
@@ -12,3 +12,4 @@ Bundle-ClassPath: libs/xstream-1.4.4.jar,
  .
 Export-Package: de.iteratec.logan.common.model,
  de.iteratec.logan.common.service
+Bundle-Vendor: iteratec.de
