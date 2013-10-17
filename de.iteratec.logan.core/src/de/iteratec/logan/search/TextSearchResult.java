@@ -57,9 +57,8 @@ public class TextSearchResult {
    * @param match the match to add
    */
   public void addMatch(Match match) {
-    boolean hasAdded = false;
     synchronized (fElementsToMatches) {
-      hasAdded = doAddMatch(match);
+      doAddMatch(match);
     }
   }
 
@@ -150,9 +149,8 @@ public class TextSearchResult {
    * @param match the match to remove
    */
   public void removeMatch(Match match) {
-    boolean existed = false;
     synchronized (fElementsToMatches) {
-      existed = doRemoveMatch(match);
+      doRemoveMatch(match);
     }
   }
 
@@ -186,18 +184,12 @@ public class TextSearchResult {
     return existed;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   public void addListener(ISearchResultListener l) {
     synchronized (fListeners) {
       fListeners.add(l);
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   public void removeListener(ISearchResultListener l) {
     synchronized (fListeners) {
       fListeners.remove(l);

@@ -43,14 +43,14 @@ public class UpdateService {
 
   public IStatus update(IProgressMonitor progressMonitor) {
     if (agent == null) {
-      return new Status(Status.ERROR, "de.iteratec.logan.core", "Update failed!");
+      return new Status(IStatus.ERROR, "de.iteratec.logan.core", "Update failed!");
     }
 
     SubMonitor sub = SubMonitor.convert(progressMonitor, "Checking for application updates...", 200);
     IStatus result = operation.resolveModal(sub.newChild(100));
     if (result.getCode() == UpdateOperation.STATUS_NOTHING_TO_UPDATE) {
       // popUpInformation("Nothing to update!");
-      return new Status(Status.OK, "de.iteratec.logan.core", "Nothing to update!");
+      return new Status(IStatus.OK, "de.iteratec.logan.core", "Nothing to update!");
     }
     else {
       installUpdates();
@@ -89,7 +89,7 @@ public class UpdateService {
           } catch (Exception e) {
             e.printStackTrace();
             // TODO agu
-            IStatus result = new Status(Status.ERROR, "de.iteratec.logan.core", "Update failed!", e);
+            IStatus result = new Status(IStatus.ERROR, "de.iteratec.logan.core", "Update failed!", e);
             StatusManager.getManager().handle(result);
           }
         }
