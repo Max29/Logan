@@ -5,7 +5,7 @@ import java.util.List;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import de.iteratec.logan.collections.EnabledExpressionPredicate;
+import de.iteratec.logan.common.collections.EnabledExpressionPredicate;
 import de.iteratec.logan.common.model.Expression;
 import de.iteratec.logan.common.model.Profile;
 

@@ -4,22 +4,20 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.search.core.text.TextSearchEngine;
+import org.eclipse.search.ui.text.Match;
+
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import de.iteratec.logan.Logger;
-import de.iteratec.logan.collections.EnabledExpressionPredicate;
-import de.iteratec.logan.collections.ProfileExpressionsFunction;
+import de.iteratec.logan.common.Logger;
+import de.iteratec.logan.common.collections.EnabledExpressionPredicate;
+import de.iteratec.logan.common.collections.ProfileExpressionsFunction;
 import de.iteratec.logan.common.model.Expression;
 import de.iteratec.logan.common.model.Profile;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
-
-import org.eclipse.core.resources.IFile;
-
-import org.eclipse.search.core.text.TextSearchEngine;
-import org.eclipse.search.ui.text.Match;
 
 
 public class LoganalyserSearchEngine {

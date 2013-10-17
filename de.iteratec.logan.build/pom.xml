@@ -76,6 +76,7 @@
 		<module>../de.iteratec.logan.repository</module>
 		<module>../de.iteratec.logan.feature</module>
 		<module>../de.iteratec.logan.common</module>
+		<module>../de.iteratec.logan.search</module>		
 		<module>../de.iteratec.logan.core</module>
 		<module>../de.iteratec.logan.target</module>
 	</modules>

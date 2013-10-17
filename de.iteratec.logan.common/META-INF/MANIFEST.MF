@@ -10,6 +10,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: libs/xstream-1.4.4.jar,
  .
-Export-Package: de.iteratec.logan.common.model,
+Export-Package: de.iteratec.logan.common,
+ de.iteratec.logan.common.collections,
+ de.iteratec.logan.common.model,
  de.iteratec.logan.common.service
 Bundle-Vendor: iteratec.de

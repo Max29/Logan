@@ -14,12 +14,12 @@ import com.google.common.io.Files;
 
 import de.iteratec.logan.AppUtils;
 import de.iteratec.logan.Messages;
-import de.iteratec.logan.collections.FileMatchLineFunction;
 import de.iteratec.logan.common.model.Expression;
 import de.iteratec.logan.common.model.Profile;
 import de.iteratec.logan.common.service.ProfilePersister;
 import de.iteratec.logan.editor.results.SearchResultViewer;
 import de.iteratec.logan.search.FileMatch;
+import de.iteratec.logan.search.FileMatchLineFunction;
 import de.iteratec.logan.search.LineMatch;
 import de.iteratec.logan.search.LoganalyserSearchEngine;
 import de.iteratec.logan.search.SearchUtils;

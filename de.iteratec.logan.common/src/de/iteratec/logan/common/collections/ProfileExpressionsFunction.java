@@ -1,4 +1,4 @@
-package de.iteratec.logan.collections;
+package de.iteratec.logan.common.collections;
 
 import com.google.common.base.Function;
 
