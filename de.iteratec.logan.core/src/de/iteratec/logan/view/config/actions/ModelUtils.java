@@ -2,8 +2,8 @@ package de.iteratec.logan.view.config.actions;
 
 import java.util.List;
 
-import de.iteratec.logan.model.Expression;
-import de.iteratec.logan.model.Profile;
+import de.iteratec.logan.common.model.Expression;
+import de.iteratec.logan.common.model.Profile;
 
 
 public class ModelUtils {

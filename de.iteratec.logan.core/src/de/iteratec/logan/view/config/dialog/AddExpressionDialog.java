@@ -1,7 +1,7 @@
 package de.iteratec.logan.view.config.dialog;
 
 import de.iteratec.logan.Messages;
-import de.iteratec.logan.model.Expression;
+import de.iteratec.logan.common.model.Expression;
 import de.iteratec.logan.view.config.CustomColorSelector;
 
 import org.eclipse.swt.SWT;

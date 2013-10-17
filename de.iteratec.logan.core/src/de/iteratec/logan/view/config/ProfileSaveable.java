@@ -7,8 +7,8 @@ import java.io.File;
 
 import de.iteratec.logan.AppUtils;
 import de.iteratec.logan.Messages;
-import de.iteratec.logan.model.Profile;
-import de.iteratec.logan.service.ProfilePersister;
+import de.iteratec.logan.common.model.Profile;
+import de.iteratec.logan.common.service.ProfilePersister;
 import de.iteratec.logan.view.SearchView;
 
 import org.eclipse.swt.widgets.Shell;

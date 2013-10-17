@@ -1,7 +1,7 @@
 package de.iteratec.logan.view.config.dnd;
 
-import de.iteratec.logan.model.Expression;
-import de.iteratec.logan.model.Profile;
+import de.iteratec.logan.common.model.Expression;
+import de.iteratec.logan.common.model.Profile;
 import de.iteratec.logan.view.SearchView;
 import de.iteratec.logan.view.config.ProfilesContentProvider;
 

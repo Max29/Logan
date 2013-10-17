@@ -1,6 +1,6 @@
 package de.iteratec.logan.view.config.dnd;
 
-import de.iteratec.logan.model.Expression;
+import de.iteratec.logan.common.model.Expression;
 
 import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;

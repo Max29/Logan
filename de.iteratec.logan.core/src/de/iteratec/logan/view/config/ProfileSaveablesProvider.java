@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.iteratec.logan.model.Profile;
+import de.iteratec.logan.common.model.Profile;
 
 
 public class ProfileSaveablesProvider {

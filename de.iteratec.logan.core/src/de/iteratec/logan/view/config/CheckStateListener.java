@@ -5,8 +5,8 @@ import java.util.List;
 import com.google.common.collect.Iterables;
 
 import de.iteratec.logan.collections.EnabledExpressionPredicate;
-import de.iteratec.logan.model.Expression;
-import de.iteratec.logan.model.Profile;
+import de.iteratec.logan.common.model.Expression;
+import de.iteratec.logan.common.model.Profile;
 
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;

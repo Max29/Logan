@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import de.iteratec.logan.model.Expression;
-import de.iteratec.logan.model.Profile;
+import de.iteratec.logan.common.model.Expression;
+import de.iteratec.logan.common.model.Profile;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;

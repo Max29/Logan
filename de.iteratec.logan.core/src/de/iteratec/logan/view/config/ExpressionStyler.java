@@ -1,6 +1,6 @@
 package de.iteratec.logan.view.config;
 
-import de.iteratec.logan.model.Expression;
+import de.iteratec.logan.common.model.Expression;
 import de.iteratec.logan.service.ColorManager;
 
 import org.eclipse.swt.graphics.TextStyle;

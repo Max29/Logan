@@ -3,7 +3,7 @@ package de.iteratec.logan.view.config.actions;
 import java.util.List;
 
 import de.iteratec.logan.Messages;
-import de.iteratec.logan.model.Profile;
+import de.iteratec.logan.common.model.Profile;
 import de.iteratec.logan.view.SearchView;
 
 import org.eclipse.jface.action.Action;

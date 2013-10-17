@@ -3,8 +3,8 @@ package de.iteratec.logan.view.config;
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 
-import de.iteratec.logan.model.Expression;
-import de.iteratec.logan.model.Profile;
+import de.iteratec.logan.common.model.Expression;
+import de.iteratec.logan.common.model.Profile;
 
 import org.eclipse.jface.viewers.StyledCellLabelProvider;
 import org.eclipse.jface.viewers.StyledString;

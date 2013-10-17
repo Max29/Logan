@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import de.iteratec.logan.model.Expression;
+import de.iteratec.logan.common.model.Expression;
 
 import org.eclipse.core.resources.IFile;
 

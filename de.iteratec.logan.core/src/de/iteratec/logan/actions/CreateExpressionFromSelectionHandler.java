@@ -3,8 +3,8 @@ package de.iteratec.logan.actions;
 import java.util.List;
 
 import de.iteratec.logan.AppUtils;
-import de.iteratec.logan.model.Expression;
-import de.iteratec.logan.model.Profile;
+import de.iteratec.logan.common.model.Expression;
+import de.iteratec.logan.common.model.Profile;
 import de.iteratec.logan.view.ProfileTreeViewer;
 import de.iteratec.logan.view.SearchView;
 import de.iteratec.logan.view.config.ProfilesContentProvider;

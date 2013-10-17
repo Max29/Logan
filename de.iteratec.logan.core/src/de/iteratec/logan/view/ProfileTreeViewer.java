@@ -1,6 +1,6 @@
 package de.iteratec.logan.view;
 
-import de.iteratec.logan.model.Profile;
+import de.iteratec.logan.common.model.Profile;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
