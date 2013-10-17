@@ -69,7 +69,12 @@ public class OpenFileAction extends Action implements IWorkbenchWindowActionDele
 
   @Override
   public void run() {
-    IFile file = getFile();
+    String selectedFileName = chooseFile();
+    openEditor(selectedFileName);
+  }
+
+  public void openEditor(String selectedFileName) {
+    IFile file = getFile(selectedFileName);
     if (file != null) {
       IWorkbenchPage page = fWindow.getActivePage();
       try {
@@ -80,8 +85,12 @@ public class OpenFileAction extends Action implements IWorkbenchWindowActionDele
     }
   }
 
-  private IFile getFile() {
+  private IFile getFile(String selectedFileName) {
     try {
+      if (selectedFileName == null) {
+        return null;
+      }
+
       IWorkspace ws = ResourcesPlugin.getWorkspace();
       IProject project = ws.getRoot().getProject(VIRTUAL_PROJECT_NAME);
       if (!project.exists()) {
@@ -89,13 +98,6 @@ public class OpenFileAction extends Action implements IWorkbenchWindowActionDele
       }
       if (!project.isOpen()) {
         project.open(null);
-      }
-
-      FileDialog fileDialog = new FileDialog(fWindow.getShell(), SWT.OPEN);
-      fileDialog.setFilterPath(filterPath);
-      String selectedFileName = fileDialog.open();
-      if (selectedFileName == null) {
-        return null;
       }
 
       if (IOUtils.isZipFile(selectedFileName)) {
@@ -114,5 +116,12 @@ public class OpenFileAction extends Action implements IWorkbenchWindowActionDele
     }
 
     return null;
+  }
+
+  private String chooseFile() {
+    FileDialog fileDialog = new FileDialog(fWindow.getShell(), SWT.OPEN);
+    fileDialog.setFilterPath(filterPath);
+
+    return fileDialog.open();
   }
 }

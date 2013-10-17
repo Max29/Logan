@@ -19,6 +19,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.graphics.Point;
 
 import org.eclipse.core.runtime.CoreException;
@@ -57,6 +58,9 @@ public class LoganWorkbenchAdvisor extends WorkbenchAdvisor {
         wc.setShowCoolBar(true);
         wc.setShowStatusLine(true);
         configurer.setShowProgressIndicator(true);
+
+        configurer.addEditorAreaTransfer(FileTransfer.getInstance());
+        configurer.configureEditorAreaDropListener(new EditorAreaDropAdapter(configurer.getWindow()));
       }
 
       @Override
