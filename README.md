@@ -16,9 +16,15 @@ The main features:
 * Drag and drop search expressions from one profile to other
 * Can open very big log files
 * Self-update on Startup
+ 
+
+## Downloads
+
+All Logan version release downloads can be found under https://github.com/iteratec/Logan/releases
 
 ## Building from source
 
+    > git clone https://github.com/iteratec/Logan.git
     > cd de.iteratec.logan.build
     > mvn clean package
     
