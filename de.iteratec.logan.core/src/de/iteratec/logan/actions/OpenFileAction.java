@@ -104,6 +104,10 @@ public class OpenFileAction extends Action implements IWorkbenchWindowActionDele
         File combinedFile = IOUtils.combineZipFileEntries(selectedFileName);
         selectedFileName = combinedFile.getAbsolutePath();
       }
+      else if (IOUtils.isGzFile(selectedFileName)) {
+        File combinedFile = IOUtils.combineGzFileEntries(selectedFileName);
+        selectedFileName = combinedFile.getAbsolutePath();
+      }
 
       filterPath = new File(selectedFileName).getParent();
       IPath location = new Path(selectedFileName);
