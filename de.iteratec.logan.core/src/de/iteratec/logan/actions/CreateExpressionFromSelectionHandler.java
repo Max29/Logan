@@ -41,6 +41,7 @@ public class CreateExpressionFromSelectionHandler extends AbstractHandler {
     Expression newExpression = new Expression(searchTerm);
     newExpression.setName(searchTerm);
     newExpression.setEnabled(true);
+    newExpression.setCaseSensitive(true);
     AddExpressionDialog dialog = new AddExpressionDialog(Display.getDefault().getActiveShell(), newExpression);
     dialog.open();
     if (dialog.getReturnCode() == Window.OK) {
