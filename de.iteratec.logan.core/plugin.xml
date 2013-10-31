@@ -594,5 +594,19 @@
            type="org.eclipse.jface.text.ITextSelection">
      </propertyTester>
   </extension>
+  <extension
+        point="org.eclipse.ui.preferencePages">
+     <page
+           class="de.iteratec.logan.preferences.LoganalyserPreferencePage"
+           id="de.iteratec.logan.core.preferences"
+           name="Logan">
+     </page>
+  </extension>
+  <extension
+        point="org.eclipse.core.runtime.preferences">
+     <initializer
+           class="de.iteratec.logan.preferences.PreferenceInitializer">
+     </initializer>
+  </extension>
    
 </plugin>

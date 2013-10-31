@@ -3,7 +3,6 @@
 
 <product name="Logan" uid="de.iteratec.logan.product" id="de.iteratec.logan.core.product" application="de.iteratec.logan.core.application" version="1.2.0.qualifier" useFeatures="true" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
@@ -349,6 +348,7 @@
    </features>
 
    <configurations>
+      <plugin id="de.iteratec.logan.core" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />

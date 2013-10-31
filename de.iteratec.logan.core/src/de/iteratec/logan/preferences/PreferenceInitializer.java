@@ -1,10 +1,10 @@
 package de.iteratec.logan.preferences;
 
+import de.iteratec.logan.LoganPlugin;
+
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 
 import org.eclipse.jface.preference.IPreferenceStore;
-
-import org.eclipse.ui.PlatformUI;
 
 
 /**
@@ -14,10 +14,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 
   @Override
   public void initializeDefaultPreferences() {
-    IPreferenceStore store = PlatformUI.getPreferenceStore();
-    store.setDefault(PreferenceConstants.P_BOOLEAN, true);
-    store.setDefault(PreferenceConstants.P_CHOICE, "choice2");
-    store.setDefault(PreferenceConstants.P_STRING, "Default value");
+    IPreferenceStore preferenceStore = LoganPlugin.getDefault().getPreferenceStore();
+    preferenceStore.setDefault(PreferenceConstants.SEARCH_RESULT_CREATION, SearchResultsCreation.ONCE.name());
   }
 
 }

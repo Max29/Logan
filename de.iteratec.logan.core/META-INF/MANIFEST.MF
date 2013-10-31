@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Logan Core
 Bundle-SymbolicName: de.iteratec.logan.core;singleton:=true
 Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: de.iteratec.logan.LoganPlugin
 Bundle-Vendor: iteratec.de
 Bundle-Localization: plugin
 Export-Package: de.iteratec.logan,

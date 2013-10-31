@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.UUID;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
@@ -18,6 +19,8 @@ import de.iteratec.logan.common.model.Expression;
 import de.iteratec.logan.common.model.Profile;
 import de.iteratec.logan.common.service.ProfilePersister;
 import de.iteratec.logan.editor.results.SearchResultViewer;
+import de.iteratec.logan.preferences.LoganPreferences;
+import de.iteratec.logan.preferences.SearchResultsCreation;
 import de.iteratec.logan.search.FileMatch;
 import de.iteratec.logan.search.FileMatchLineFunction;
 import de.iteratec.logan.search.LineMatch;
@@ -206,7 +209,7 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
     treeActionsView.setLayout(layout);
 
     Button selectAllButton = new Button(treeActionsView, SWT.FLAT | SWT.PUSH);
-    selectAllButton.setText("Select All");
+    selectAllButton.setText(Messages.SearchView_selectAll);
     selectAllButton.setImage(ImageUtils.getImage(Images.CHECKED));
     selectAllButton.addSelectionListener(new SelectionAdapter() {
       @Override
@@ -219,7 +222,7 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
     });
 
     Button deselectAllButton = new Button(treeActionsView, SWT.FLAT | SWT.PUSH);
-    deselectAllButton.setText("Deselect All");
+    deselectAllButton.setText(Messages.SearchView_deselectAll);
     deselectAllButton.setImage(ImageUtils.getImage(Images.UNCHECKED));
     deselectAllButton.addSelectionListener(new SelectionAdapter() {
       @Override
@@ -339,8 +342,8 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
   public void addProfile(Profile profile, File file, boolean restore) {
     List<Profile> profiles = profilesContentProvider.getProfiles();
     if (containsProfile(profile, profiles)) {
-      String msg = String.format("The profile '%s' is already opened!", profile.getName());
-      MessageDialog.openError(getViewSite().getShell(), "Dublicate profile", msg);
+      String msg = String.format(Messages.SearchView_profileAlreadyOpen, profile.getName());
+      MessageDialog.openError(getViewSite().getShell(), Messages.SearchView_dublicateProfile, msg);
 
       return;
     }
@@ -486,7 +489,7 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
       Iterable<String> matches = Iterables.transform(searchResult, new FileMatchLineFunction(document));
       final String searchResultText = searchResultText(matches);
 
-      SearchResultView searchResultView = (SearchResultView) page.showView(SearchResultView.ID);
+      SearchResultView searchResultView = createResultsView(activeEditor, page);
       SearchResultViewer searchResultViewer = searchResultView.getTextViewer();
       searchResultViewer.setTextSearchResult(textSearchResult);
       searchResultViewer.setDocument(new Document(searchResultText));
@@ -514,6 +517,31 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
     } catch (PartInitException e2) {
       e2.printStackTrace();
     }
+  }
+
+  private SearchResultView createResultsView(ITextEditor activeEditor, final IWorkbenchPage page)
+      throws PartInitException {
+    String secondaryId = null;
+    SearchResultView searchResultView = null;
+    SearchResultsCreation resultsMode = LoganPreferences.getSearchResultsCreation();
+    switch (resultsMode) {
+      case ONCE:
+        secondaryId = "once"; //$NON-NLS-1$
+        break;
+      case EDITOR:
+        secondaryId = activeEditor.getTitle();
+        break;
+      case SEARCH:
+        secondaryId = UUID.randomUUID().toString();
+        break;
+      default:
+        break;
+    }
+
+    page.showView(SearchResultView.ID, secondaryId, IWorkbenchPage.VIEW_CREATE);
+    searchResultView = (SearchResultView) page.showView(SearchResultView.ID, secondaryId, IWorkbenchPage.VIEW_ACTIVATE);
+
+    return searchResultView;
   }
 
   private String searchResultText(Iterable<String> matches) {

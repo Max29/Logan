@@ -22,16 +22,25 @@ public class Messages extends NLS {
   public static String AddProfileDialog_name;
   public static String AddProfileDialog_title;
   public static String AddProfileExpressionAction_addNewExpression;
+  public static String preferencesHeader;
   public static String RemoveExpressionAction_removeExpression;
   public static String RemoveOccurenciesHandler_addStyleJobName;
   public static String RemoveProfileAction_closeProfile;
+  public static String searchResultCreationModeEditor;
+  public static String searchResultCreationMode;
+  public static String searchResultCreationModeOnce;
+  public static String searchResultCreationModeSearch;
+  public static String SearchView_deselectAll;
+  public static String SearchView_dublicateProfile;
   public static String SearchView_loadProfiles;
   public static String SearchView_newProfile;
+  public static String SearchView_profileAlreadyOpen;
   public static String SearchView_saveAll;
   public static String SearchView_saveProfile;
   public static String        SearchView_search;
   public static String        SearchView_searchJobName;
   public static String        SearchView_searchJobTitle;
+  public static String SearchView_selectAll;
   static {
     // initialize resource bundle
     NLS.initializeMessages(BUNDLE_NAME, Messages.class);
