@@ -12,6 +12,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 
+import org.eclipse.jface.text.IFindReplaceTargetExtension3;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.SourceViewer;
@@ -22,7 +23,7 @@ import org.eclipse.ui.internal.WorkbenchMessages;
 
 
 @SuppressWarnings("restriction")
-public class SearchResultViewer extends SourceViewer {
+public class SearchResultViewer extends SourceViewer implements IFindReplaceTargetExtension3 {
   /** Menu id for the editor context menu. */
   public static final String CONTEXT_MENU_ID = "#SearchResultEditorContext"; //$NON-NLS-1$
 
@@ -78,6 +79,16 @@ public class SearchResultViewer extends SourceViewer {
     action.setEnabled(canDoOperation(operation));
     action.setActionDefinitionId(actionDefinitionId);
     return action;
+  }
+
+  @Override
+  public int findAndSelect(int startPosition, String findString, boolean forwardSearch, boolean caseSensitive,
+                           boolean wholeWord, boolean regExSearch) {
+    return super.findAndSelect(startPosition, findString, forwardSearch, caseSensitive, wholeWord, regExSearch);
+  }
+
+  @Override
+  public void replaceSelection(String text, boolean regExReplace) {
   }
 
 }

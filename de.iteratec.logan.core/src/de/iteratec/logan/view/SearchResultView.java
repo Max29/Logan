@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IFindReplaceTarget;
 import org.eclipse.jface.text.source.VerticalRuler;
 
 import org.eclipse.ui.part.ViewPart;
@@ -19,6 +20,7 @@ public class SearchResultView extends ViewPart {
 
   private SearchResultViewer textViewer;
   private IDocument          document;
+  private IFindReplaceTarget fFindReplaceTarget;
 
   @Override
   public void createPartControl(Composite parent) {
@@ -56,5 +58,18 @@ public class SearchResultView extends ViewPart {
 
   public SearchResultViewer getTextViewer() {
     return textViewer;
+  }
+
+  @Override
+  @SuppressWarnings("rawtypes")
+  public Object getAdapter(Class adapter) {
+    if (IFindReplaceTarget.class.equals(adapter)) {
+      if (fFindReplaceTarget == null) {
+        fFindReplaceTarget = (textViewer == null ? null : textViewer.getFindReplaceTarget());
+      }
+      return fFindReplaceTarget;
+    }
+
+    return super.getAdapter(adapter);
   }
 }

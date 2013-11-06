@@ -583,6 +583,18 @@
            </reference>
         </enabledWhen>
      </handler>
+     <handler
+           class="de.iteratec.logan.actions.FindReplaceHandler"
+           commandId="org.eclipse.ui.edit.findReplace">
+        <activeWhen>
+           <with
+                 variable="activePartId">
+              <equals
+                    value="de.iteratec.logan.view.SearchResultView">
+              </equals>
+           </with>
+        </activeWhen>
+     </handler>
   </extension>
   <extension
         point="org.eclipse.core.expressions.propertyTesters">
