@@ -44,8 +44,8 @@ import de.iteratec.logan.view.config.actions.RemoveExpressionAction;
 import de.iteratec.logan.view.config.actions.RemoveProfileAction;
 import de.iteratec.logan.view.config.dialog.AddExpressionDialog;
 import de.iteratec.logan.view.config.dialog.AddProfileDialog;
-import de.iteratec.logan.view.config.dnd.MyDragListener;
-import de.iteratec.logan.view.config.dnd.MyDropListener;
+import de.iteratec.logan.view.config.dnd.ExpressionDragListener;
+import de.iteratec.logan.view.config.dnd.ExpressionDropListener;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
@@ -156,8 +156,8 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
 
     int operations = DND.DROP_COPY | DND.DROP_MOVE;
     Transfer[] transferTypes = new Transfer[] { TextTransfer.getInstance() };
-    treeViewer.addDragSupport(operations, transferTypes, new MyDragListener(treeViewer));
-    treeViewer.addDropSupport(operations, transferTypes, new MyDropListener(treeViewer, this));
+    treeViewer.addDragSupport(operations, transferTypes, new ExpressionDragListener(treeViewer));
+    treeViewer.addDropSupport(operations, transferTypes, new ExpressionDropListener(treeViewer, this));
 
     final MenuManager mgr = new MenuManager();
     mgr.setRemoveAllWhenShown(true);
@@ -414,9 +414,14 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
     }
   }
 
-  public void moveExpression(Expression expression, Profile sourceProfile, Profile targetProfile) {
+  public void moveExpression(Expression expression, Profile sourceProfile, Profile targetProfile, int expressionIndex) {
     sourceProfile.getExpressions().remove(expression);
-    targetProfile.getExpressions().add(expression);
+    if (expressionIndex > targetProfile.getExpressions().size() - 1) {
+      targetProfile.getExpressions().add(expression);
+    }
+    else {
+      targetProfile.getExpressions().add(expressionIndex, expression);
+    }
 
     ProfileSaveable profileSaveable = ProfileSaveablesProvider.getInstance().get(sourceProfile);
     profileSaveable.setDirty(true);

@@ -10,11 +10,11 @@ import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
 
-public class MyDragListener extends DragSourceAdapter {
+public class ExpressionDragListener extends DragSourceAdapter {
 
   private final CheckboxTreeViewer viewer;
 
-  public MyDragListener(CheckboxTreeViewer viewer) {
+  public ExpressionDragListener(CheckboxTreeViewer viewer) {
     this.viewer = viewer;
   }
 
