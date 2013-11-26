@@ -50,7 +50,6 @@ import de.iteratec.logan.view.config.dnd.ExpressionDropListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -74,6 +73,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ITreeSelection;
@@ -155,7 +155,7 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
     ColumnViewerToolTipSupport.enableFor(treeViewer);
 
     int operations = DND.DROP_COPY | DND.DROP_MOVE;
-    Transfer[] transferTypes = new Transfer[] { TextTransfer.getInstance() };
+    Transfer[] transferTypes = new Transfer[] { LocalSelectionTransfer.getTransfer() };
     treeViewer.addDragSupport(operations, transferTypes, new ExpressionDragListener(treeViewer));
     treeViewer.addDropSupport(operations, transferTypes, new ExpressionDropListener(treeViewer, this));
 
