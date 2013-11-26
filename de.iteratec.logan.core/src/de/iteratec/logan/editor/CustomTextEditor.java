@@ -1,10 +1,15 @@
 package de.iteratec.logan.editor;
 
+import org.eclipse.core.runtime.CoreException;
+
+import org.eclipse.core.resources.IFile;
+
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
 
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchActionConstants;
 
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
@@ -47,6 +52,19 @@ public class CustomTextEditor extends TextEditor {
     }
     else {
       addAction(menu, ITextEditorActionConstants.GROUP_COPY, ITextEditorActionConstants.COPY);
+    }
+  }
+
+  @Override
+  public void dispose() {
+    super.dispose();
+
+    IEditorInput editorInput = getEditorInput();
+    final IFile file = (IFile) editorInput.getAdapter(IFile.class);
+    try {
+      file.delete(true, null);
+    } catch (CoreException e) {
+      e.printStackTrace();
     }
   }
 }
