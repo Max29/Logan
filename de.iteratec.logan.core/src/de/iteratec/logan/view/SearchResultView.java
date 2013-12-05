@@ -1,16 +1,23 @@
 package de.iteratec.logan.view;
 
+import de.iteratec.logan.AppUtils;
 import de.iteratec.logan.editor.results.CustomTextSourceViewerConfiguration;
 import de.iteratec.logan.editor.results.SearchResultViewer;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IToolBarManager;
 
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IFindReplaceTarget;
 import org.eclipse.jface.text.source.VerticalRuler;
 
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.part.ViewPart;
 
 
@@ -40,7 +47,22 @@ public class SearchResultView extends ViewPart {
   }
 
   private void initializeToolBar() {
-    // IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
+    IToolBarManager toolbarManager = getViewSite().getActionBars().getToolBarManager();
+    Action addItemAction = new Action("Copy All to clipboard") { //$NON-NLS-1$
+      @Override
+      public void run() {
+        // a bit hacky...
+        StyledText textWidget = textViewer.getTextWidget();
+        Point selection = textWidget.getSelection();
+        textWidget.setSelectionRange(0, Math.max(textWidget.getCharCount(), 0));
+        textWidget.copy();
+        textWidget.setSelection(selection);
+      }
+    };
+    ISharedImages sharedImages = AppUtils.getActiveWorkbenchWindow().getWorkbench().getSharedImages();
+    addItemAction.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
+
+    toolbarManager.add(addItemAction);
   }
 
   private void initializeMenu() {
