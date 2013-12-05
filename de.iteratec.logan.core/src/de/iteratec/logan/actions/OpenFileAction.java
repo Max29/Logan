@@ -14,19 +14,15 @@ import java.io.File;
 
 import de.iteratec.logan.editor.CustomTextEditor;
 import de.iteratec.logan.service.IOUtils;
+import de.iteratec.logan.utils.ProjectUtils;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.ResourcesPlugin;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -40,9 +36,8 @@ import org.eclipse.ui.part.FileEditorInput;
 
 public class OpenFileAction extends Action implements IWorkbenchWindowActionDelegate {
 
-  private static final String VIRTUAL_PROJECT_NAME = "External Files"; //$NON-NLS-1$
-  private IWorkbenchWindow    fWindow;
-  private String              filterPath;
+  private IWorkbenchWindow fWindow;
+  private String           filterPath;
 
   public OpenFileAction() {
     setEnabled(true);
@@ -91,15 +86,6 @@ public class OpenFileAction extends Action implements IWorkbenchWindowActionDele
         return null;
       }
 
-      IWorkspace ws = ResourcesPlugin.getWorkspace();
-      IProject project = ws.getRoot().getProject(VIRTUAL_PROJECT_NAME);
-      if (!project.exists()) {
-        project.create(null);
-      }
-      if (!project.isOpen()) {
-        project.open(null);
-      }
-
       if (IOUtils.isZipFile(selectedFileName)) {
         File combinedFile = IOUtils.combineZipFileEntries(selectedFileName);
         selectedFileName = combinedFile.getAbsolutePath();
@@ -109,10 +95,9 @@ public class OpenFileAction extends Action implements IWorkbenchWindowActionDele
         selectedFileName = combinedFile.getAbsolutePath();
       }
 
+      IProject project = ProjectUtils.openProject();
       filterPath = new File(selectedFileName).getParent();
-      IPath location = new Path(selectedFileName);
-      IFile file = project.getFile(location.lastSegment());
-      file.createLink(location, IResource.REPLACE, null);
+      IFile file = ProjectUtils.addFileToProject(project, selectedFileName);
 
       return file;
     } catch (Exception e) {

@@ -11,6 +11,7 @@
 package de.iteratec.logan;
 
 import de.iteratec.logan.service.UpdateJob;
+import de.iteratec.logan.utils.ProjectUtils;
 
 import org.eclipse.e4.ui.model.application.ui.SideValue;
 import org.eclipse.e4.ui.model.application.ui.basic.MTrimBar;
@@ -111,11 +112,17 @@ public class LoganWorkbenchAdvisor extends WorkbenchAdvisor {
         try {
           // save the full workspace before quit
           ResourcesPlugin.getWorkspace().save(true, null);
+          ProjectUtils.clearVirtualLinks();
         } catch (final CoreException e) {
           // log exception, if required
         }
 
         return true;
+      }
+
+      @Override
+      public void postWindowClose() {
+        super.postWindowClose();
       }
 
       @Override
