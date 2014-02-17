@@ -5,12 +5,14 @@ import java.util.List;
 import de.iteratec.logan.AppUtils;
 import de.iteratec.logan.common.model.Expression;
 import de.iteratec.logan.common.model.Profile;
+import de.iteratec.logan.common.utils.ModelUtils;
 import de.iteratec.logan.view.ProfileTreeViewer;
 import de.iteratec.logan.view.SearchView;
 import de.iteratec.logan.view.config.ProfilesContentProvider;
 import de.iteratec.logan.view.config.dialog.AddExpressionDialog;
 
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -42,34 +44,20 @@ public class CreateExpressionFromSelectionHandler extends AbstractHandler {
     newExpression.setName(searchTerm);
     newExpression.setEnabled(true);
     newExpression.setCaseSensitive(true);
-    AddExpressionDialog dialog = new AddExpressionDialog(Display.getDefault().getActiveShell(), newExpression);
+    Shell parentShell = Display.getDefault().getActiveShell();
+    IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+    SearchView searchView = (SearchView) activeWorkbenchWindow.getActivePage().findView(SearchView.ID);
+    ProfileTreeViewer profileTreeViewer = searchView.getTreeViewer();
+    ProfilesContentProvider contentProvider = (ProfilesContentProvider) profileTreeViewer.getContentProvider();
+    List<Profile> profiles = contentProvider.getProfiles();
+    AddExpressionDialog dialog = new AddExpressionDialog(parentShell, newExpression, profiles);
     dialog.open();
     if (dialog.getReturnCode() == Window.OK) {
       Expression expression = dialog.getExpression();
-
-      IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-      SearchView searchView = (SearchView) activeWorkbenchWindow.getActivePage().findView(SearchView.ID);
-      ProfileTreeViewer profileTreeViewer = searchView.getTreeViewer();
-      ProfilesContentProvider contentProvider = (ProfilesContentProvider) profileTreeViewer.getContentProvider();
-      List<Profile> profiles = contentProvider.getProfiles();
-      Profile defaultProfile = getDefaultProfile(profiles);
-      if (defaultProfile == null) {
-        defaultProfile = profileTreeViewer.getDefaultProfile();
-        defaultProfile.getExpressions().clear();
-        searchView.addProfile(defaultProfile, null, false);
-      }
-
-      searchView.addProfileExpression(defaultProfile, expression);
-    }
-
-    return null;
-  }
-
-  private Profile getDefaultProfile(List<Profile> profiles) {
-    for (Profile profile : profiles) {
-      if (ProfileTreeViewer.DEFAULT_PROFILE.equals(profile.getName())) {
-        return profile;
-      }
+      String profileName = dialog.getProfileName();
+      
+      Profile profile = ModelUtils.getProfile(profiles, profileName);
+      searchView.addProfileExpression(profile, expression);
     }
 
     return null;

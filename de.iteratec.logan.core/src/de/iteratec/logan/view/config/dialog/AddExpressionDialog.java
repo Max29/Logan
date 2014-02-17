@@ -1,7 +1,14 @@
 package de.iteratec.logan.view.config.dialog;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
+
 import de.iteratec.logan.Messages;
+import de.iteratec.logan.common.collections.ProfileNameFunction;
 import de.iteratec.logan.common.model.Expression;
+import de.iteratec.logan.common.model.Profile;
 import de.iteratec.logan.view.config.CustomColorSelector;
 
 import org.eclipse.swt.SWT;
@@ -9,6 +16,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -36,7 +44,10 @@ import org.eclipse.jface.resource.StringConverter;
 @SuppressWarnings("restriction")
 public class AddExpressionDialog extends TitleAreaDialog {
   private boolean             dirty;
+  private List<Profile>       profiles;
+  private String              profileName;
   private Expression          expression;
+  private Combo               profileCombo;
   private Text                nameText;
   private Text                searchText;
   private Button              buttonEnabled;
@@ -47,6 +58,7 @@ public class AddExpressionDialog extends TitleAreaDialog {
 
   public AddExpressionDialog(Shell parentShell) {
     super(parentShell);
+
     this.expression = new Expression();
     this.expression.setEnabled(true);
   }
@@ -61,6 +73,12 @@ public class AddExpressionDialog extends TitleAreaDialog {
     else {
       this.expression = expression;
     }
+  }
+
+  public AddExpressionDialog(Shell parentShell, Expression expression, List<Profile> profiles) {
+    this(parentShell, expression);
+
+    this.profiles = profiles;
   }
 
   @Override
@@ -80,6 +98,17 @@ public class AddExpressionDialog extends TitleAreaDialog {
     GridData gridData = new GridData();
     gridData.grabExcessHorizontalSpace = true;
     gridData.horizontalAlignment = GridData.FILL;
+
+    if (profiles != null) {
+      Label profileLabel = new Label(parent, SWT.NONE);
+      profileLabel.setText(Messages.AddExpressionDialog_profile);
+      profileCombo = new Combo(parent, SWT.BORDER | SWT.READ_ONLY);
+      profileCombo.setLayoutData(gridData);
+      profileCombo.setItems(getProfileNames());
+      if (!profiles.isEmpty()) {
+        profileCombo.select(0);
+      }
+    }
 
     Label nameLabel = new Label(parent, SWT.NONE);
     nameLabel.setText(Messages.AddExpressionDialog_name);
@@ -146,6 +175,15 @@ public class AddExpressionDialog extends TitleAreaDialog {
     return parent;
   }
 
+  private String[] getProfileNames() {
+    ProfileNameFunction f = new ProfileNameFunction();
+    List<String> names = Lists.transform(profiles, f);
+    List<String> sortedNames = Ordering.from(String.CASE_INSENSITIVE_ORDER).sortedCopy(names);
+    
+
+    return sortedNames.toArray(new String[names.size()]);
+  }
+
   @Override
   protected boolean isResizable() {
     return true;
@@ -154,11 +192,25 @@ public class AddExpressionDialog extends TitleAreaDialog {
   @Override
   protected void okPressed() {
     if (nameText.getText().length() != 0 && searchText.getText().length() != 0) {
+      if (profiles != null) {
+        int selectionIndex = profileCombo.getSelectionIndex();
+        if (selectionIndex == -1) {
+          setErrorMessage(Messages.AddExpressionDialog_errorEnterRequiredData);
+          return;
+        } 
+        
+        profileName = profileCombo.getItem(selectionIndex);
+      }
+
       super.okPressed();
     }
     else {
       setErrorMessage(Messages.AddExpressionDialog_errorEnterRequiredData);
     }
+  }
+  
+  public String getProfileName() {
+    return profileName;
   }
 
   public Expression getExpression() {
