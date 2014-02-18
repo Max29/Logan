@@ -7,6 +7,8 @@ import de.iteratec.logan.common.model.Profile;
 import de.iteratec.logan.view.SearchView;
 import de.iteratec.logan.view.config.ProfilesContentProvider;
 
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
 
 import org.eclipse.jface.util.LocalSelectionTransfer;
@@ -86,7 +88,16 @@ public class ExpressionDropListener extends ViewerDropAdapter {
       SourceExpression source = getSource(draggedExpression);
       Profile targetProfile = (Profile) getCurrentTarget();
       int expressionIndex = targetProfile.getExpressions().size();
-      searchView.moveExpression(source.getExpression(), source.getProfile(), targetProfile, expressionIndex);
+
+      DropTargetEvent currentEvent = getCurrentEvent();
+      if (currentEvent.detail == DND.DROP_COPY) {
+        Expression clone = source.getExpression().clone();
+        searchView.addProfileExpression(targetProfile, clone);
+      }
+      else {
+        searchView.moveExpression(source.getExpression(), source.getProfile(), targetProfile, expressionIndex);
+      }
+
       viewer.refresh();
       return true;
     }

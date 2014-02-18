@@ -96,4 +96,16 @@ public class Expression extends AbstractModelObject {
         + textColor + "]";
   }
 
+  public Expression clone() {
+    Expression clone = new Expression(searchExpression);
+    clone.name = name;
+    clone.caseSensitive = caseSensitive;
+    clone.regexp = regexp;
+    clone.enabled = enabled;
+    clone.backgroundColor = backgroundColor;
+    clone.textColor = textColor;
+
+    return clone;
+  }
+
 }
