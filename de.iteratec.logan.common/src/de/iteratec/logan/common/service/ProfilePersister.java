@@ -3,6 +3,9 @@ package de.iteratec.logan.common.service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.Charset;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
@@ -34,7 +37,9 @@ public class ProfilePersister {
 
   public void write(Profile profile, File file) {
     try {
-      xstream.toXML(profile, new FileOutputStream(file));
+      FileOutputStream outputStream = new FileOutputStream(file);
+      Writer writer = new OutputStreamWriter(outputStream, Charset.forName("UTF-8"));
+      xstream.toXML(profile, writer);
     } catch (FileNotFoundException e1) {
       e1.printStackTrace();
     }
