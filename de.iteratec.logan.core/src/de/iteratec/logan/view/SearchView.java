@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 
@@ -23,8 +22,6 @@ import de.iteratec.logan.editor.results.SearchResultViewer;
 import de.iteratec.logan.preferences.LoganPreferences;
 import de.iteratec.logan.preferences.SearchResultsCreation;
 import de.iteratec.logan.search.FileMatch;
-import de.iteratec.logan.search.FileMatchLineFunction;
-import de.iteratec.logan.search.LineMatch;
 import de.iteratec.logan.search.LoganalyserSearchEngine;
 import de.iteratec.logan.search.SearchUtils;
 import de.iteratec.logan.search.TextSearchResult;
@@ -468,9 +465,9 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
     if (activeEditor != null) {
       final IFile file = (IFile) activeEditor.getEditorInput().getAdapter(IFile.class);
       SubProgressMonitor searchMonitor = new SubProgressMonitor(monitor, 10);
-      final TextSearchResult textSearchResult = LoganalyserSearchEngine.search(file,
+      final TextSearchResult textSearchResult = LoganalyserSearchEngine.searchProfiles(file,
           profilesContentProvider.getProfiles(), searchMonitor);
-      final List<FileMatch> searchResult = LoganalyserSearchEngine.search(textSearchResult);
+      final List<FileMatch> searchResult = LoganalyserSearchEngine.getFileMatches(textSearchResult);
 
       Display.getDefault().asyncExec(new Runnable() {
         @Override
@@ -481,7 +478,7 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
     }
   }
 
-  private void showSearchResults(TextSearchResult textSearchResult, List<FileMatch> searchResult,
+  private void showSearchResults(TextSearchResult textSearchResult, List<FileMatch> fileMatches,
                                  ITextEditor activeEditor) {
 
     IWorkbenchWindow workbenchWindow = getSite().getWorkbenchWindow();
@@ -490,8 +487,8 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
     try {
       IDocumentProvider documentProvider = activeEditor.getDocumentProvider();
       IDocument document = documentProvider.getDocument(activeEditor.getEditorInput());
-      addLineInformation(document, searchResult);
-      Iterable<String> matches = Iterables.transform(searchResult, new FileMatchLineFunction(document));
+      SearchUtils.addLineInformation(document, fileMatches);
+      Iterable<String> matches = SearchUtils.getMatchineLines(document, fileMatches);
       final String searchResultText = searchResultText(matches);
 
       SearchResultView searchResultView = createResultsView(activeEditor, page);
@@ -501,9 +498,9 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
 
       int offset = 0;
       int count = 0;
-      TextPresentation presentation = new TextPresentation(searchResult.size() + 1);
+      TextPresentation presentation = new TextPresentation(fileMatches.size() + 1);
       List<String> matchesList = Lists.newArrayList(matches);
-      for (FileMatch fileMatch : searchResult) {
+      for (FileMatch fileMatch : fileMatches) {
         Expression expression = fileMatch.getExpression();
         String backgroundColorValue = expression.getBackgroundColor();
         String textColorValue = expression.getTextColor();
@@ -583,13 +580,6 @@ public class SearchView extends ViewPart implements ISaveablesSource, ISaveableP
     }
 
     return result;
-  }
-
-  private void addLineInformation(IDocument document, List<FileMatch> searchResult) {
-    for (FileMatch fileMatch : searchResult) {
-      List<LineMatch> lineInformations = SearchUtils.getLineInformations(document, fileMatch);
-      fileMatch.getLineMatches().addAll(lineInformations);
-    }
   }
 
   private class SearchJob extends Job {

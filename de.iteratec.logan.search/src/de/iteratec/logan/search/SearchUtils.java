@@ -3,6 +3,7 @@ package de.iteratec.logan.search;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import org.eclipse.jface.text.BadLocationException;
@@ -31,5 +32,16 @@ public class SearchUtils {
     }
 
     return Collections.emptyList();
+  }
+  
+  public static void addLineInformation(IDocument document, List<FileMatch> searchResult) {
+    for (FileMatch fileMatch : searchResult) {
+      List<LineMatch> lineInformations = SearchUtils.getLineInformations(document, fileMatch);
+      fileMatch.getLineMatches().addAll(lineInformations);
+    }
+  }
+  
+  public static Iterable<String> getMatchineLines(IDocument document, List<FileMatch> fileMatches) {
+    return Iterables.transform(fileMatches, new FileMatchLineFunction(document));
   }
 }

@@ -48,7 +48,7 @@ public class MarkOccurenciesHandler extends AbstractOccurenciesHandler {
           final TextSearchResult textSearchResult = LoganalyserSearchEngine.search(file, searchTerm, monitor);
 
           Map<Annotation, Position> annotationMap = new HashMap<Annotation, Position>();
-          final List<FileMatch> searchResult = LoganalyserSearchEngine.search(textSearchResult);
+          final List<FileMatch> searchResult = LoganalyserSearchEngine.getFileMatches(textSearchResult);
           for (FileMatch fileMatch : searchResult) {
             Position position = new Position(fileMatch.getOffset(), fileMatch.getLength());
             Annotation annotation = new Annotation(false);

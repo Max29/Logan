@@ -28,7 +28,6 @@ public class LoganalyserSearchEngine {
     monitor.beginTask("Searching for expressions", IProgressMonitor.UNKNOWN);
 
     TextSearchResult textSearchResult = new TextSearchResult();
-
     Expression expression = new Expression(searchTerm);
     searchForExpression(file, monitor, textSearchResult, expression);
 
@@ -36,7 +35,19 @@ public class LoganalyserSearchEngine {
     return textSearchResult;
   }
 
-  public static TextSearchResult search(IFile file, List<Profile> profiles, IProgressMonitor monitor) {
+  public static TextSearchResult searchRegexp(IFile file, String regexp, IProgressMonitor monitor) {
+    monitor.beginTask("Searching for regexp expression", IProgressMonitor.UNKNOWN);
+
+    TextSearchResult textSearchResult = new TextSearchResult();
+    Expression expression = new Expression(regexp);
+    expression.setRegexp(true);
+    searchForExpression(file, monitor, textSearchResult, expression);
+
+    monitor.done();
+    return textSearchResult;
+  }
+
+  public static TextSearchResult searchProfiles(IFile file, List<Profile> profiles, IProgressMonitor monitor) {
     Iterable<Iterable<Expression>> allProfileExpressions = Iterables.transform(profiles,
         new ProfileExpressionsFunction());
     Iterable<Expression> allExpressions = Iterables.concat(allProfileExpressions);
@@ -85,7 +96,7 @@ public class LoganalyserSearchEngine {
     return pattern;
   }
 
-  public static List<FileMatch> search(TextSearchResult textSearchResult) {
+  public static List<FileMatch> getFileMatches(TextSearchResult textSearchResult) {
     List<FileMatch> result = Lists.newArrayList();
 
     Object[] elements = textSearchResult.getElements();
